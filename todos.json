@@ -1,0 +1,14 @@
+{
+    "tasks": {
+        "task1": {
+            "title": "code",
+            "description": "do some of coding for regular work practice",
+            "duration": null
+        },
+        "study": {
+            "title": "c++",
+            "description": "clear some basics",
+            "duration": null
+        }
+    }
+}
