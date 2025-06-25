@@ -3,12 +3,14 @@
         "task1": {
             "title": "code",
             "description": "do some of coding for regular work practice",
-            "duration": null
+            "duration": null,
+            "completed": true
         },
         "study": {
             "title": "c++",
             "description": "clear some basics",
-            "duration": null
+            "duration": null,
+            "completed": false
         }
     }
 }

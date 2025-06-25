@@ -2,6 +2,7 @@ import json
 import datetime
 
 
+
 def add_task(name , title , desc, duration):
     with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json", "r+") as f:
         data = json.load(f)
@@ -13,7 +14,8 @@ def add_task(name , title , desc, duration):
         data["tasks"][name] = {
             "title" : title,
             "description" : desc,
-            "duration" : duration
+            "duration" : duration,
+            "completed": False
         }
         f.seek(0)
         json.dump(data, f, indent=4)
@@ -40,8 +42,17 @@ def remove_task(name):
             else:
                 return f"Task '{name}' not found."
 
-def completed():
-    pass
+def completed(name : str):
+    with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r+") as f:
+         data = json.load(f)
+         if name in data["tasks"]:
+            data["tasks"][name]["completed"] = True
+            f.seek(0)
+            json.dump(data, f, indent=4)
+            f.truncate()
+            return f"TASK MARKED COMPLETED"
+         else:
+            print(f"Task '{name}' not found.")
 
 def load_tasks():
     with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r") as f:
@@ -49,6 +60,7 @@ def load_tasks():
         task_count = len(data["tasks"])
         
         print(f"\n📋 Total Tasks: {task_count}\n")
+        print("📝 AVAILABLE TASKS ARE:")
 
         for task_name in data["tasks"]:
-            print(f"AVAILABLE TASKS ARE : \n {task_name}")
+            print(f" - {task_name}")
