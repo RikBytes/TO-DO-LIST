@@ -43,7 +43,10 @@ def main():
                     break
                 else:
                     message = completed(name)
-                    print(message)
+                    if message == None:
+                        print("no data found")
+                    else:
+                        print(message)
                     break
             case "0":
                 print("Exiting program ............")
