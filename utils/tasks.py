@@ -1,10 +1,13 @@
 import json
 import datetime
+from dotenv import load_dotenv
+import os
 
-
+load_dotenv()
+FILE_PATH = os.getenv("FILE_PATH") # PUT THE JSON FILE PATH HERE
 
 def add_task(name , title , desc, duration):
-    with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json", "r+") as f:
+    with open(FILE_PATH, "r+") as f:
         data = json.load(f)
 
         if name in data["tasks"]:
@@ -23,14 +26,14 @@ def add_task(name , title , desc, duration):
         return print("TASK ADDED SUCCESSFULLY")
 
 def view_task(name : str):
-    with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r") as f:
+    with open(FILE_PATH,"r") as f:
         data = json.load(f)
         task = data["tasks"][name]
         output = print(f'TITLE : {task["title"]} \nDescription : {task["description"]} \nDuration : {task["duration"]}')
         return output
 
 def remove_task(name):
-        with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r+") as f:
+        with open(FILE_PATH,"r+") as f:
             data = json.load(f)
 
             if name in data["tasks"]:
@@ -43,7 +46,7 @@ def remove_task(name):
                 return f"Task '{name}' not found."
 
 def completed(name : str):
-    with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r+") as f:
+    with open(FILE_PATH,"r+") as f:
          data = json.load(f)
          if name in data["tasks"]:
             data["tasks"][name]["completed"] = True
@@ -55,7 +58,7 @@ def completed(name : str):
             print(f"Task '{name}' not found.")
 
 def load_tasks():
-    with open("D:/Users/panda/Documents/2K25/TO-DO LIST/todos.json","r") as f:
+    with open(FILE_PATH,"r") as f:
         data = json.load(f)
         task_count = len(data["tasks"])
         
