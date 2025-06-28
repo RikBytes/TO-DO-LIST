@@ -1,16 +1,10 @@
 {
     "tasks": {
-        "task1": {
-            "title": "code",
-            "description": "do some of coding for regular work practice",
-            "duration": null,
-            "completed": true
-        },
         "study": {
-            "title": "c++",
-            "description": "clear some basics",
+            "title": "dsa",
+            "description": "complete trees",
             "duration": null,
-            "completed": true
+            "completed": false
         }
     }
 }
