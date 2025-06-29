@@ -1,5 +1,5 @@
 import json
-import datetime
+from datetime import datetime
 from dotenv import load_dotenv
 import os
 
@@ -51,9 +51,13 @@ def write_data(data):
     except Exception as e:
         print(f"❌ Failed to write to file: {e}")
 
-def add_task(name , title , desc, duration):
 
+def add_task(name , title , desc):
         data = read_data()
+        now = datetime.now()
+        now_str = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        start_time = datetime.strptime(now_str, "%Y-%m-%d %H:%M:%S")
 
         if name in data["tasks"]:
                 print("task name already exist")
@@ -62,17 +66,24 @@ def add_task(name , title , desc, duration):
         data["tasks"][name] = {
             "title" : title,
             "description" : desc,
-            "duration" : duration,
-            "completed": False
+            "duration" : None,
+            "status": "pending",
+            "start time": f"{start_time}"
         }
         write_data(data)
         return print("TASK ADDED SUCCESSFULLY")
 
+
 def view_task(name : str):
         data = read_data()
         task = data["tasks"][name]
-        output = print(f'TITLE : {task["title"]} \nDescription : {task["description"]} \nDuration : {task["duration"]}\nCompleted : {task["completed"]}')
+        strt_time = task["start time"]
+        strt_time_str = datetime.strptime(strt_time, "%Y-%m-%d %H:%M:%S")
+        friendly_time = strt_time_str.strftime("%B %d, %Y at %I:%M %p").lstrip("0")
+
+        output = print(f'TITLE : {task["title"]} \nDescription : {task["description"]} \nDuration : {task["duration"]}\nStatus : {task["status"]}\nStarted at : {friendly_time}')
         return output
+
 
 def remove_task(name):
             data = read_data()
@@ -86,14 +97,38 @@ def remove_task(name):
 
 
 def completed(name : str):
-         data = read_data()
+        data = read_data()
+        end_time = datetime.now()
 
-         if name in data["tasks"]:
-            data["tasks"][name]["completed"] = True
+        # Convert start time from string to datetime
+        start_time_str = data["tasks"][name]["start time"]
+        start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
+
+        # Calculate time difference
+        time_diff = end_time - start_time
+        total_seconds = int(time_diff.total_seconds())
+        hours = total_seconds // 3600
+        minutes = (total_seconds % 3600) // 60
+        seconds = total_seconds % 60
+
+        # Optional: friendly duration string
+        parts = []
+        if hours:
+            parts.append(f"{hours} hour(s)")
+        if minutes:
+            parts.append(f"{minutes} minute(s)")
+        if seconds or not parts:
+            parts.append(f"{seconds} second(s)")
+        friendly_duration = " ".join(parts)
+
+        if name in data["tasks"]:
+            data["tasks"][name]["status"] = "completed"
+            data["tasks"][name]["duration"] = f"{friendly_duration}"
             write_data(data)
             return f"TASK MARKED COMPLETED"
-         else:
+        else:
             print(f"Task '{name}' not found.")
+
 
 def load_tasks():
         data = read_data()

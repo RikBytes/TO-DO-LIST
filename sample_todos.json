@@ -1,10 +1,11 @@
 {
     "tasks": {
         "study": {
-            "title": "dsa",
-            "description": "complete trees",
-            "duration": null,
-            "completed": false
+            "title": "chapter 1",
+            "description": "complete reading the chapter",
+            "duration": "6 hour(s) 59 minute(s) 13 second(s)",
+            "status": "completed",
+            "start time": "2025-06-29 14:30:00"
         }
     }
 }

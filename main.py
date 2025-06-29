@@ -14,8 +14,8 @@ def main():
             case "2":
                 print("ADD Task selected.")
 
-                name, title, desc, duration = get_task_details()
-                add_task(name, title,  desc, duration)
+                name, title, desc = get_task_details()
+                add_task(name, title,  desc)
 
                 break
             case "3":
