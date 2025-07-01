@@ -100,28 +100,29 @@ def completed(name : str):
         data = read_data()
         end_time = datetime.now()
 
-        # Convert start time from string to datetime
-        start_time_str = data["tasks"][name]["start time"]
-        start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
-
-        # Calculate time difference
-        time_diff = end_time - start_time
-        total_seconds = int(time_diff.total_seconds())
-        hours = total_seconds // 3600
-        minutes = (total_seconds % 3600) // 60
-        seconds = total_seconds % 60
-
-        # Optional: friendly duration string
-        parts = []
-        if hours:
-            parts.append(f"{hours} hour(s)")
-        if minutes:
-            parts.append(f"{minutes} minute(s)")
-        if seconds or not parts:
-            parts.append(f"{seconds} second(s)")
-        friendly_duration = " ".join(parts)
 
         if name in data["tasks"]:
+            # Convert start time from string to datetime
+            start_time_str = data["tasks"][name]["start time"]
+            start_time = datetime.strptime(start_time_str, "%Y-%m-%d %H:%M:%S")
+
+            # Calculate time difference
+            time_diff = end_time - start_time
+            total_seconds = int(time_diff.total_seconds())
+            hours = total_seconds // 3600
+            minutes = (total_seconds % 3600) // 60
+            seconds = total_seconds % 60
+
+            # Optional: friendly duration string
+            parts = []
+            if hours:
+                parts.append(f"{hours} hour(s)")
+            if minutes:
+                parts.append(f"{minutes} minute(s)")
+            if seconds or not parts:
+                parts.append(f"{seconds} second(s)")
+            friendly_duration = " ".join(parts)
+            
             data["tasks"][name]["status"] = "completed"
             data["tasks"][name]["duration"] = f"{friendly_duration}"
             write_data(data)
@@ -140,3 +141,17 @@ def load_tasks():
 
         for task_name in data["tasks"]:
             print(f" - {task_name}")
+
+def filter_task(filter_key, filter_value):
+    data = read_data()
+    tasks = data["tasks"]
+    result = ""
+    for k, v in tasks.items():
+        if v.get(filter_key) == filter_value:
+            result += f"🆔 {k}\n"
+            result += f"📌 Title : {v.get('title')}\n"
+            result += f"📝 Desc  : {v.get('description')}\n"
+            result += f"📂 Status: {v.get('status')}\n"
+            result += "-------------------------\n"
+    
+    return result if result else "❌ No tasks found."

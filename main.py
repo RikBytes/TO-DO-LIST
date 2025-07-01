@@ -1,8 +1,8 @@
-from utils import add_task, view_task, remove_task, load_tasks, get_task_details, completed, isCompleted
+from utils import add_task, view_task, remove_task, load_tasks, get_task_details, completed, isCompleted, filter_task
 
 def main():
     while True:
-        option = input(f"PLEASE SELECT AN PROPER OPTION : \n 1) LOAD TASKS \n 2) ADD TASK \n 3) VIEW TASK \n 4) REMOVE TASK \n 5) COMPLETE TASK \nTYPE 0 TO EXIT \nENTER YOUR CHOICE : ")
+        option = input(f"PLEASE SELECT AN PROPER OPTION : \n 1) LOAD TASKS \n 2) ADD TASK \n 3) VIEW TASK \n 4) REMOVE TASK \n 5) COMPLETE TASK \n 6) FILTER TASK \nTYPE 0 TO EXIT \nENTER YOUR CHOICE : ")
 
         match option:
             case "1":
@@ -48,6 +48,15 @@ def main():
                     else:
                         print(message)
                     break
+            case "6":
+                print("FILTER TASK SELECTED")
+                print(f"-------------------")
+                filter_key = input("ENTER THE NAME OF THE KEY : ")
+                filter_value = input("ENTER THE NAME OF THE VALUE : ")
+                print(f"-------------------\n")
+                message = filter_task(filter_key, filter_value)
+                print(message)
+                break
             case "0":
                 print("Exiting program ............")
                 break
