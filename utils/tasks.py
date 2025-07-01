@@ -155,3 +155,20 @@ def filter_task(filter_key, filter_value):
             result += "-------------------------\n"
     
     return result if result else "❌ No tasks found."
+
+def list_tasks():
+    data = read_data()
+    if data:
+        tasks = data["tasks"]
+        message = ""
+        if not tasks:
+            return f"No Tasks Available to display"
+        else:
+            message += f"🧾 The tasks are :\n"
+            message += f"------------------"
+            for k, v in tasks.items():
+                message += f"\n📌{k}"
+            message += f"\n------------------"
+    else:
+         return f"no data found"
+    return message
